@@ -1,57 +1,66 @@
-import { View, Text, StatusBar } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SplashScreen } from './src/screens';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, StatusBar } from 'react-native';
 import AuthNavigator from './src/navigators/AuthNavigator';
+import MainNavigator from './src/navigators/MainNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import MainNavigator from './src/navigators/MainNavigator';
+import * as Font from 'expo-font';
+import * as SplashScreenExpo from 'expo-splash-screen';
+
+// Prevent the splash screen from hiding immediately
+SplashScreenExpo.preventAutoHideAsync();
 
 const App = () => {
-  // State
-  const [isShowSpalash, setIsShowSplash] = useState(true);
+  const [appIsReady, setAppIsReady] = useState(false);
   const [accessToken, setAccessToken] = useState('');
-  
-  // Constant
-  const {getItem, setItem} = useAsyncStorage('assetToken');
-  
 
-  //Function
-  useEffect(()=>{
-    const timeout = setTimeout(()=>{
-      setIsShowSplash(false)
-    },1500)
+  const { getItem } = useAsyncStorage('assetToken');
 
-    return () => clearTimeout(timeout);
+  const prepareApp = async () => {
+    try {
+      // Load fonts
+      await Font.loadAsync({
+        'BalooPaaji2-Regular': require('./assets/fonts/BalooPaaji2-Regular.ttf'),
+        'BalooPaaji2-Medium': require('./assets/fonts/BalooPaaji2-Medium.ttf'),
+        'BalooPaaji2-SemiBold': require('./assets/fonts/BalooPaaji2-SemiBold.ttf'),
+        'BalooPaaji2-Bold': require('./assets/fonts/BalooPaaji2-Bold.ttf'),
+      });
 
-  })
+      const token = await getItem();
+      if (token) {
+        setAccessToken(token);
+      }
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setAppIsReady(true);
+    }
+  };
 
   useEffect(() => {
-    checkLogin();
-  }, [])
+    prepareApp();
+  }, []);
 
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreenExpo.hideAsync();
+    }
+  }, [appIsReady]);
 
-  const checkLogin = async () => {
-    const token = await getItem()
-    token && setAccessToken(token);
-    console.log(token)
+  if (!appIsReady) {
+    return null;
   }
 
   return (
     <>
-    <StatusBar
-          barStyle="dark-content"
-          backgroundColor="transparent"
-          translucent
-        />
-    {isShowSpalash ? (<SplashScreen/>
-  ) : (<NavigationContainer>
-    {
-      accessToken ? <MainNavigator/> : <AuthNavigator/>
-    }
-    </NavigationContainer>
-    )}
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+      <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
+        <NavigationContainer>
+          {accessToken ? <MainNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
+      </View>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -14,6 +14,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-ChoViecLam-ChoViecLamTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ChoViecLam-ChoViecLamTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		BEE491B35F984F6C9F6DDB4B /* BalooPaaji2-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7DBDB3998DF4E61A7C62DC5 /* BalooPaaji2-Bold.ttf */; };
+		4B2A6BB558AA4ED184681CB3 /* BalooPaaji2-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CFDF74F2DD4928B4912AD9 /* BalooPaaji2-ExtraBold.ttf */; };
+		9AA00A037AB4403AB9A90B18 /* BalooPaaji2-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA5E73122BC54EBEA3067D19 /* BalooPaaji2-Medium.ttf */; };
+		FD99F32685614F66839793F3 /* BalooPaaji2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6116689AB5C44EBC8BEC8C4E /* BalooPaaji2-Regular.ttf */; };
+		EEE6072126E54029815AC46A /* BalooPaaji2-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5794A658122D4DF5B7D36401 /* BalooPaaji2-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,11 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ChoViecLam/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ChoViecLam-ChoViecLamTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChoViecLam-ChoViecLamTests.release.xcconfig"; path = "Target Support Files/Pods-ChoViecLam-ChoViecLamTests/Pods-ChoViecLam-ChoViecLamTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C7DBDB3998DF4E61A7C62DC5 /* BalooPaaji2-Bold.ttf */ = {isa = PBXFileReference; name = "BalooPaaji2-Bold.ttf"; path = "../assets/fonts/BalooPaaji2-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		28CFDF74F2DD4928B4912AD9 /* BalooPaaji2-ExtraBold.ttf */ = {isa = PBXFileReference; name = "BalooPaaji2-ExtraBold.ttf"; path = "../assets/fonts/BalooPaaji2-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DA5E73122BC54EBEA3067D19 /* BalooPaaji2-Medium.ttf */ = {isa = PBXFileReference; name = "BalooPaaji2-Medium.ttf"; path = "../assets/fonts/BalooPaaji2-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6116689AB5C44EBC8BEC8C4E /* BalooPaaji2-Regular.ttf */ = {isa = PBXFileReference; name = "BalooPaaji2-Regular.ttf"; path = "../assets/fonts/BalooPaaji2-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5794A658122D4DF5B7D36401 /* BalooPaaji2-SemiBold.ttf */ = {isa = PBXFileReference; name = "BalooPaaji2-SemiBold.ttf"; path = "../assets/fonts/BalooPaaji2-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +134,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				7E205DDCE81346368E23EB05 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +160,19 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		7E205DDCE81346368E23EB05 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C7DBDB3998DF4E61A7C62DC5 /* BalooPaaji2-Bold.ttf */,
+				28CFDF74F2DD4928B4912AD9 /* BalooPaaji2-ExtraBold.ttf */,
+				DA5E73122BC54EBEA3067D19 /* BalooPaaji2-Medium.ttf */,
+				6116689AB5C44EBC8BEC8C4E /* BalooPaaji2-Regular.ttf */,
+				5794A658122D4DF5B7D36401 /* BalooPaaji2-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +269,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BEE491B35F984F6C9F6DDB4B /* BalooPaaji2-Bold.ttf in Resources */,
+				4B2A6BB558AA4ED184681CB3 /* BalooPaaji2-ExtraBold.ttf in Resources */,
+				9AA00A037AB4403AB9A90B18 /* BalooPaaji2-Medium.ttf in Resources */,
+				FD99F32685614F66839793F3 /* BalooPaaji2-Regular.ttf in Resources */,
+				EEE6072126E54029815AC46A /* BalooPaaji2-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

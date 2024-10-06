@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BalooPaaji2-Bold.ttf",
+      "sha1": "69125bfeb6139f1538ab3bb36d3aa92f94ff098d"
+    },
+    {
+      "path": "assets/fonts/BalooPaaji2-ExtraBold.ttf",
+      "sha1": "7cf99bd9a1736513ef55c1edfe7fe1673d9d2b72"
+    },
+    {
+      "path": "assets/fonts/BalooPaaji2-Medium.ttf",
+      "sha1": "41fc3051891132d114138bfb281e3b9d307a6e73"
+    },
+    {
+      "path": "assets/fonts/BalooPaaji2-Regular.ttf",
+      "sha1": "3c323fe0c2b7224c49ab646bce249efb2bbade42"
+    },
+    {
+      "path": "assets/fonts/BalooPaaji2-SemiBold.ttf",
+      "sha1": "e59b9fd28a3cb63da67e119c9316025b4e1d0525"
+    }
+  ]
+}

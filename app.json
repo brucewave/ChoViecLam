@@ -1,4 +1,12 @@
 {
   "name": "ChoViecLam",
-  "displayName": "ChoViecLam"
+  "displayName": "ChoViecLam",
+  "plugins": [
+    [
+      "expo-font",
+      {
+        "fonts": ["./assets/fonts/Inter-Black.otf"]
+      }
+    ]
+  ]
 }

@@ -1,9 +1,11 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextComponent } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { globalStyles } from '../../style/globalStyles'
 import Swiper from 'react-native-swiper'
 import { appColors } from '../../constants/appColors'
 import { appInfo } from '../../constants/appInfos'
+import { fontFamilies } from '../../constants/fontFamilies'
+import TextComponent from '../../components/TextComponent'
 
 const OnboardingScreen = ({navigation}: any) => {
   const [index, setIndex] = useState(0);
@@ -50,7 +52,7 @@ const OnboardingScreen = ({navigation}: any) => {
             paddingHorizontal: 16,
             paddingVertical: 20,
             position: 'absolute',
-            bottom: 5,
+            bottom: -10,
             right: 20,
             left: 20,
             flexDirection: 'row',
@@ -59,24 +61,18 @@ const OnboardingScreen = ({navigation}: any) => {
           },
         ]}>
         <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-          {/* <TextComponent
-            text="Skip"
-            color={appColors.gray2}
-            font={fontFamilies.medium}
-          /> */}
-
-          <Text style = {[styles.text, {color:appColors.gray5}]} >Skip</Text>
+          <TextComponent text="Skip" color={appColors.gray2} font={fontFamilies.semiBold}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
             index < 2 ? setIndex(index + 1) : navigation.navigate('LoginScreen')
           }>
-          {/* <TextComponent
+          <TextComponent
             text="Next"
             color={appColors.white}
-            font={fontFamilies.medium}
-          /> */}
-          <Text style = {[styles.text, {color:appColors.gray2}]} >Next</Text>
+            font={fontFamilies.semiBold}
+          />
 
         </TouchableOpacity>
       </View>

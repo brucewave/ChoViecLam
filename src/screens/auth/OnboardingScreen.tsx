@@ -30,10 +30,10 @@ const OnboardingScreen = ({navigation}: any) => {
         <Image
           source={require('../../assests/images/onboarding_2.png')}
           style={{
-            flex: 1,
+            flex: 0,
             width: appInfo.sizes.WIDTH,
             height: appInfo.sizes.HEIGHT,
-            resizeMode: 'cover',
+            resizeMode: 'container',
           }}
         />
         <Image
@@ -61,7 +61,7 @@ const OnboardingScreen = ({navigation}: any) => {
           },
         ]}>
         <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-          <TextComponent text="Skip" color={appColors.gray2} font={fontFamilies.semiBold}
+          <TextComponent text="Bỏ qua" color={appColors.gray2} font={fontFamilies.semiBold}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -69,7 +69,7 @@ const OnboardingScreen = ({navigation}: any) => {
             index < 2 ? setIndex(index + 1) : navigation.navigate('LoginScreen')
           }>
           <TextComponent
-            text="Next"
+            text="Tiếp theo"
             color={appColors.white}
             font={fontFamilies.semiBold}
           />

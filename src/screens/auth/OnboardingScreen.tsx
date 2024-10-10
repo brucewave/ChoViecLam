@@ -30,10 +30,19 @@ const OnboardingScreen = ({navigation}: any) => {
         <Image
           source={require('../../assests/images/onboarding_2.png')}
           style={{
-            flex: 0,
+            flex: 1,
             width: appInfo.sizes.WIDTH,
             height: appInfo.sizes.HEIGHT,
-            resizeMode: 'container',
+            resizeMode: 'cover',
+          }}
+        />
+        <Image
+          source={require('../../assests/images/onboarding_3.png')}
+          style={{
+            flex: 1,
+            width: appInfo.sizes.WIDTH,
+            height: appInfo.sizes.HEIGHT,
+            resizeMode: 'cover',
           }}
         />
         <Image

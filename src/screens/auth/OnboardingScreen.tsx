@@ -45,15 +45,6 @@ const OnboardingScreen = ({navigation}: any) => {
             resizeMode: 'cover',
           }}
         />
-        <Image
-          source={require('../../assests/images/onboarding_3.png')}
-          style={{
-            flex: 1,
-            width: appInfo.sizes.WIDTH,
-            height: appInfo.sizes.HEIGHT,
-            resizeMode: 'cover',
-          }}
-        />
       </Swiper>
       <View
         style={[

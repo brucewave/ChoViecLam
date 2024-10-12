@@ -18,12 +18,22 @@ import {appColors} from '../../constants/appColors';
 // import {addAuth} from '../../redux/reducers/authReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
+import authenticationAPI from '../../apis/authApi';
 
 const LoginScreen = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
+
+  const handleLogin = async () => {
+   try{
+    const response = await authenticationAPI.HandleAuthentication('/hello');
+    console.log(response);
+   }catch(error){
+    console.log(error);
+   }
+  };
 
   return (
     <ContainerComponent isImageBackground isScroll>
@@ -83,7 +93,7 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
     <SectionComponent>
       <ButtonComponent
         // disable={isDisable}
-        // onPress={handleLogin}
+        onPress={handleLogin}
         text="Đăng nhập"
         type="primary"
       />

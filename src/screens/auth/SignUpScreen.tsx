@@ -18,6 +18,9 @@ import {appColors} from '../../constants/appColors';
 // import {addAuth} from '../../redux/reducers/authReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
+import authenticationAPI from '../../apis/authApi';
+import { LoadingModal } from '../../../modals';
+import { Validate } from '../../../utils/validate';
 
 const initValue = {
   username: '',
@@ -28,12 +31,64 @@ const initValue = {
 
 const SignUpScreen = ({navigation}: {navigation: any}) => {
   const [values, setValues] = useState(initValue);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   
+  useEffect(() => {
+    if(values.email || values.password || values.confirmPassword || values.username){
+      setErrorMessage('');
+    }
+  }, [values]);
+
   const handleChangeValue = (key: string, value: string) => {
     setValues(prevValues => ({
       ...prevValues,
       [key]: value
     }));
+  }
+
+  const handleRegister = async () => {
+    const { email, password, confirmPassword, username } = values;
+
+    // Check if all fields are filled
+    if (!email || !password || !confirmPassword || !username) {
+      setErrorMessage('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+
+    // Check if password and confirm password match
+    if (password !== confirmPassword) {
+      setErrorMessage('Mật khẩu nhập lại không khớp');
+      return;
+    }
+
+    // Validate email format
+    const emailValidation = Validate.email(email);
+    if (!emailValidation) {
+      setErrorMessage('Email không đúng định dạng');
+      return;
+    }
+
+    // Validate password (assuming you want to keep this check)
+    const passwordValidation = Validate.Password(password);
+    if (!passwordValidation) {
+      setErrorMessage('Mật khẩu phải có ít nhất 6 ký tự');
+      return;
+    }
+
+    // If all validations pass, proceed with registration
+    setErrorMessage('');
+    setIsLoading(true);
+    try {
+      const response = await authenticationAPI.HandleAuthentication('/register', values, 'post');
+      console.log(response);
+      setIsLoading(false);
+      // Handle successful registration here (e.g., navigate to login screen or show success message)
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setErrorMessage('Đăng ký thất bại. Vui lòng thử lại.');
+    }
   }
 
   return (
@@ -92,11 +147,17 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
       />
 
     </SectionComponent>
+    {errorMessage && 
+    <SectionComponent>
+    <TextComponent text={errorMessage} color={appColors.danger} />
+    </SectionComponent>
+    }
+
     <SpaceComponent height={16} />
     <SectionComponent>
       <ButtonComponent
         // disable={isDisable}
-        // onPress={handleLogin}
+        onPress={handleRegister}
         text="Đăng ký"
         type="primary"
       />
@@ -112,7 +173,7 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
         />
       </RowComponent>
     </SectionComponent>
-    
+    <LoadingModal visible={isLoading} />
   </ContainerComponent>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import LoginScreen from '../screens/auth/LoginScreen';
 import OnboardingScreen from '../screens/auth/OnboardingScreen';
+import { LoginScreen, SignUpScreen, Verication, ForgotPassword } from '../screens';
 
 const AuthNavigator = () => {
 
@@ -17,7 +17,12 @@ const AuthNavigator = () => {
        </Stack.Screen>
         <Stack.Screen name='LoginScreen' component={LoginScreen}>
         </Stack.Screen>
-
+        <Stack.Screen name='SignUpScreen' component={SignUpScreen}>
+        </Stack.Screen>
+        <Stack.Screen name='Verication' component={Verication}>
+        </Stack.Screen>
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword}>
+        </Stack.Screen>
     </Stack.Navigator>
   )
 }

@@ -1,5 +1,9 @@
-import { TextComponent } from "react-native/Libraries/Text/Text";
+import TextComponent from "./TextComponent";
 import SpaceComponent from "./SpaceComponent";
 import ButtonComponent from "./ButtonComponent";
 import InputComponent from "./InputComponent";
-export{SpaceComponent,TextComponent,ButtonComponent, InputComponent};
+import SectionComponent from "./SectionComponent";
+import ContainerComponent from "./ContainerComponent";
+import RowComponent from "./RowComponent";
+
+export{SpaceComponent,TextComponent,ButtonComponent, InputComponent, SectionComponent, ContainerComponent, RowComponent};

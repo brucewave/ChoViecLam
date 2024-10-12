@@ -14,7 +14,7 @@ import {
   import {fontFamilies} from '../constants/fontFamilies';
 import { globalStyles } from '../style/globalStyles';
 import RowComponent from './RowComponent';
-import TextComponent from './textComponent';
+import TextComponent from './TextComponent';
 
   interface Props {
     isImageBackground?: boolean;
@@ -75,7 +75,7 @@ import TextComponent from './textComponent';
   
     return isImageBackground ? (
       <ImageBackground
-        source={require('../assets/images/splash-img.png')}
+        source={require('../assests/images/splash-screen.png')}
         style={{flex: 1}}
         imageStyle={{flex: 1}}>
         <SafeAreaView style={{flex: 1}}>{headerComponent()}</SafeAreaView>

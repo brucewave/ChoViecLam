@@ -52,7 +52,7 @@ const OnboardingScreen = ({navigation}: any) => {
             paddingHorizontal: 16,
             paddingVertical: 20,
             position: 'absolute',
-            bottom: -10,
+            bottom: 10,
             right: 20,
             left: 20,
             flexDirection: 'row',

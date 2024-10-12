@@ -4,6 +4,7 @@ import TextComponent from './TextComponent';
 //   import {globalStyles} from '../styles/globalStyles';
 import {appColors} from '../constants/appColors';
 import {fontFamilies} from '../constants/fontFamilies';
+import { globalStyles } from '../style/globalStyles';
   
 interface Props {
     icon?: ReactNode;
@@ -19,17 +20,35 @@ interface Props {
   
   const ButtonComponent = (props: Props) => {
     const {
-      icon, text, textColor, textStyles, color, styles, onPress, iconFlex
+      icon, text, textColor, textStyles, color, styles, onPress, iconFlex, type // Added type here
     } = props;
   
-    return (
+    return type === 'primary' ? (
+      <TouchableOpacity 
+        onPress={onPress}
+        style={[globalStyles.button, {
+        }, styles]}>
+          {icon && icon}
+          <TextComponent 
+            text={text}  
+            style={[textStyles,{
+              marginLeft: icon  ? 12 : 0,
+            }]} 
+            color={textColor ?? appColors.white}
+            flex={icon && iconFlex === 'right' ? 1 : 0}
+          />
+          {icon && iconFlex === 'right' && icon}
+      </TouchableOpacity>
+    ) : (
       <TouchableOpacity>
-        {icon && iconFlex === 'left' && icon}
-        <TextComponent text={text} style={textStyles} color='primary'/>
-        {icon && iconFlex === 'right' && icon}
+        <TextComponent 
+          text={text} 
+          color={type === 'link' ? appColors.primary : appColors.text} 
+        />
       </TouchableOpacity>
     );
   };
+  
   
   export default ButtonComponent;
   

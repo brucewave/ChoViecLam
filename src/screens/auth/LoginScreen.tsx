@@ -19,20 +19,39 @@ import {appColors} from '../../constants/appColors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
 import authenticationAPI from '../../apis/authApi';
+import { Validate } from '../../../utils/validate';
+import { useDispatch } from 'react-redux';
+import { addAuth } from '../../redux/reducers/authReducer';
 
 const LoginScreen = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
-   try{
-    const response = await authenticationAPI.HandleAuthentication('/hello');
-    console.log(response);
-   }catch(error){
-    console.log(error);
-   }
+
+
+    const emailValidation = Validate.email(email);
+    if(emailValidation){
+      try{
+        const res = await authenticationAPI.HandleAuthentication(
+          '/login', 
+          {email, password}, 
+          'post'
+        );
+        dispatch(addAuth(res.data));
+          await AsyncStorage.setItem(
+            'auth', 
+            isRemember ? JSON.stringify(res.data) : email,
+          );
+      }catch(error){
+        console.log(error);
+      }
+    }else{
+      Alert.alert("Email không đúng định dạng");
+    }
   };
 
   return (

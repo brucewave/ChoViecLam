@@ -18,7 +18,7 @@ interface Props {
 const TextComponent = (props: Props) => {
   const {text, size, flex, font, color, styles, title, numberOfLine} = props;
 
-  const fontSizeDefault = Platform.OS === 'ios' ? 16 : 14;
+  const fontSizeDefault = Platform.OS === 'ios' ? 18 : 14;
 
   return (
     <Text

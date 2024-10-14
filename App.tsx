@@ -39,12 +39,7 @@ useEffect(() => {
   prepareApp();
 }, []);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsShowSplash(false);
-    }, 1500);
-    return () => clearTimeout(timeout);
-  }, []);
+
 
 
   return (

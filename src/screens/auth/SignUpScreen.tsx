@@ -1,7 +1,6 @@
 import {Lock, Sms} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
 import {Alert, Image, Switch} from 'react-native';
-// import authenticationAPI from '../../apis/authApi';
 import {
   ButtonComponent,
   ContainerComponent,
@@ -13,14 +12,13 @@ import {
 } from '../../components';
 import {appColors} from '../../constants/appColors';
 // import {Validate} from '../../utils/validate';
-// import SocialLogin from './components/SocialLogin';
-// import {useDispatch} from 'react-redux';
-// import {addAuth} from '../../redux/reducers/authReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
 import authenticationAPI from '../../apis/authApi';
 import { LoadingModal } from '../../../modals';
 import { Validate } from '../../../utils/validate';
+import { useDispatch } from 'react-redux';
+import { addAuth } from '../../redux/reducers/authReducer';
 
 const initValue = {
   username: '',
@@ -33,6 +31,8 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
   const [values, setValues] = useState(initValue);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const dispatch = useDispatch();
   
   useEffect(() => {
     if(values.email || values.password || values.confirmPassword || values.username){
@@ -80,10 +80,28 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
     setErrorMessage('');
     setIsLoading(true);
     try {
-      const response = await authenticationAPI.HandleAuthentication('/register', values, 'post');
-      console.log(response);
+      const res = await authenticationAPI.HandleAuthentication(
+        '/register', 
+        {
+          fullname: values.username, 
+          email,
+          password,}, 
+        'post'
+      );
+
+      // if (response && response.data && response.data.data) {
+      //   const { email, token } = response.data.data; // Adjust this line based on your actual response structure
+      //   Alert.alert('Registration Successful', `Email: ${email}\nToken: ${token}`);
+
+      //   dispatch(addAuth(response.data.data));
+      //   await AsyncStorage.setItem('auth', JSON.stringify(response.data.data));
+      //   navigation.navigate('HomeScreen'); // Navigate to HomeScreen after successful registration
+      // }
+      
+      dispatch(addAuth(res.data));
+      await AsyncStorage.setItem('auth', JSON.stringify(res.data));
+
       setIsLoading(false);
-      // Handle successful registration here (e.g., navigate to login screen or show success message)
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -153,7 +171,7 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
     </SectionComponent>
     }
 
-    <SpaceComponent height={16} />
+    <SpaceComponent height={10} />
     <SectionComponent>
       <ButtonComponent
         // disable={isDisable}

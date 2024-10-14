@@ -1,72 +1,68 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthNavigator from './src/navigators/AuthNavigator';
 import MainNavigator from './src/navigators/MainNavigator';
 import { NavigationContainer } from '@react-navigation/native';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
 import * as SplashScreenExpo from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
+import SplashScreen from './src/screens/SplashScreen';
+import AppRouters from './src/navigators/AppRouters';
 
-// Prevent the splash screen from hiding immediately
 SplashScreenExpo.preventAutoHideAsync();
 
 const App = () => {
-  const [appIsReady, setAppIsReady] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
+  const [isShowSplash, setIsShowSplash] = useState(true);
 
-  const { getItem } = useAsyncStorage('assetToken');
 
   const prepareApp = async () => {
     try {
-      // Load fonts
       await Font.loadAsync({
         'BalooPaaji2-Regular': require('./assets/fonts/BalooPaaji2-Regular.ttf'),
         'BalooPaaji2-Medium': require('./assets/fonts/BalooPaaji2-Medium.ttf'),
         'BalooPaaji2-SemiBold': require('./assets/fonts/BalooPaaji2-SemiBold.ttf'),
         'BalooPaaji2-Bold': require('./assets/fonts/BalooPaaji2-Bold.ttf'),
       });
-
-      const token = await getItem();
-      if (token) {
-        setAccessToken(token);
-      }
     } catch (e) {
-      console.warn(e);
+      console.warn('Error loading fonts:', e);
     } finally {
-      setAppIsReady(true);
+      setIsShowSplash(false);
+      SplashScreenExpo.hideAsync();
     }
   };
 
+useEffect(() => {
+  prepareApp();
+}, []);
+
   useEffect(() => {
-    prepareApp();
+    const timeout = setTimeout(() => {
+      setIsShowSplash(false);
+    }, 1500);
+    return () => clearTimeout(timeout);
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreenExpo.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaProvider>
-          <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
-            <NavigationContainer>
-              {accessToken ? <MainNavigator /> : <AuthNavigator />}
-            </NavigationContainer>
-          </View>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+    <Provider store={store}>
+    <StatusBar
+    barStyle="dark-content"
+    backgroundColor="transparent"
+    translucent
+    />
+    {isShowSplash ? <SplashScreen /> : (
+      <NavigationContainer>
+        <AppRouters />
+      </NavigationContainer>
+    )}
+    </Provider>
     </>
-  );
+  )
 };
 
 export default App;

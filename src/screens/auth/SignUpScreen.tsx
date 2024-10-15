@@ -49,9 +49,9 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
         (errorMessage.email ||
           errorMessage.password ||
           errorMessage.confirmPassword)) ||
-      !values.email ||
+      (!values.email ||
       !values.password ||
-      !values.confirmPassword
+      !values.confirmPassword)
     ) {
       setIsDisable(true);
     } else {
@@ -104,64 +104,21 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
 
 
   const handleRegister = async () => {
-    const { email, password, confirmPassword, username } = values;
-
-    // Check if all fields are filled
-    if (!email || !password || !confirmPassword || !username) {
-      setErrorMessage(errorMessage);
-      return;
-    }
-
-    // Check if password and confirm password match
-    if (password !== confirmPassword) {
-      setErrorMessage(errorMessage);
-      return;
-    }
-
-    // Validate email format
-    const emailValidation = Validate.email(email);
-    if (!emailValidation) {
-      setErrorMessage(errorMessage);
-      return;
-    }
-
-    // Validate password (assuming you want to keep this check)
-    const passwordValidation = Validate.Password(password);
-    if (!passwordValidation) {
-      setErrorMessage(errorMessage);
-      return;
-    }
-
-    // If all validations pass, proceed with registration
-    setErrorMessage(errorMessage);
+    const api = '/verification'
     setIsLoading(true);
-    try {
+
+    try{
       const res = await authenticationAPI.HandleAuthentication(
-        '/register', 
-        {
-          fullname: values.username, 
-          email,
-          password,}, 
-        'post'
-      );
-
-      // if (response && response.data && response.data.data) {
-      //   const { email, token } = response.data.data; // Adjust this line based on your actual response structure
-      //   Alert.alert('Registration Successful', `Email: ${email}\nToken: ${token}`);
-
-      //   dispatch(addAuth(response.data.data));
-      //   await AsyncStorage.setItem('auth', JSON.stringify(response.data.data));
-      //   navigation.navigate('HomeScreen'); // Navigate to HomeScreen after successful registration
-      // }
-      
-      dispatch(addAuth(res.data));
-      await AsyncStorage.setItem('auth', JSON.stringify(res.data));
-
-      setIsLoading(false);
-    } catch (error) {
+        api, 
+        {email: values.email}, 
+        'post')
+      navigation.navigate('Verification', {
+        code: res.data.code,
+        ...values,
+      })
+    }catch(error){
       console.log(error);
       setIsLoading(false);
-      setErrorMessage(errorMessage);
     }
   }
 

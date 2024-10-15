@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import OnboardingScreen from '../screens/auth/OnboardingScreen';
-import { LoginScreen, SignUpScreen, Verication, ForgotPassword } from '../screens';
+import { LoginScreen, SignUpScreen, Verification, ForgotPassword } from '../screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthNavigator = () => {
@@ -25,7 +25,7 @@ const AuthNavigator = () => {
        </Stack.Screen>
         <Stack.Screen name='LoginScreen' component={LoginScreen} />
         <Stack.Screen name='SignUpScreen' component={SignUpScreen} />
-        <Stack.Screen name='Verication' component={Verication}>
+        <Stack.Screen name='Verification' component={Verification}>
         </Stack.Screen>
         <Stack.Screen name='ForgotPassword' component={ForgotPassword}>
         </Stack.Screen>

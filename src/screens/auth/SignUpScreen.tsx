@@ -20,6 +20,13 @@ import { Validate } from '../../../utils/validate';
 import { useDispatch } from 'react-redux';
 import { addAuth } from '../../redux/reducers/authReducer';
 
+
+interface ErrorMessage {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 const initValue = {
   username: '',
   email: '',
@@ -30,54 +37,103 @@ const initValue = {
 const SignUpScreen = ({navigation}: {navigation: any}) => {
   const [values, setValues] = useState(initValue);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<any>();
+  const [isDisable, setIsDisable] = useState(true);
 
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if(values.email || values.password || values.confirmPassword || values.username){
-      setErrorMessage('');
+    if (
+      !errorMessage ||
+      (errorMessage &&
+        (errorMessage.email ||
+          errorMessage.password ||
+          errorMessage.confirmPassword)) ||
+      !values.email ||
+      !values.password ||
+      !values.confirmPassword
+    ) {
+      setIsDisable(true);
+    } else {
+      setIsDisable(false);
     }
-  }, [values]);
+  }, [errorMessage, values]);
 
   const handleChangeValue = (key: string, value: string) => {
-    setValues(prevValues => ({
-      ...prevValues,
-      [key]: value
-    }));
+    const data: any = {...values};
+    data[`${key}`] = value;
+    setValues(data);
   }
+
+  const formValidator = (key: string) => {
+    const data = {...errorMessage};
+    let message = ``;
+
+    switch (key) {
+      case 'email':
+        if (!values.email) {
+          message = `Email không được để trống`;
+        } else if (!Validate.email(values.email)) {
+          message = 'Email không hợp lệ';
+        } else {
+          message = '';
+        }
+
+        break;
+
+      case 'password':
+        message = !values.password ? `Mật khẩu không được để trống` : '';
+        break;
+
+      case 'confirmPassword':
+        if (!values.confirmPassword) {
+          message = `Mật khẩu nhập lại không được để trống`;
+        } else if (values.confirmPassword !== values.password) {
+          message = 'Mật khẩu nhập lại không khớp';
+        } else {
+          message = '';
+        }
+
+        break;
+    }
+
+    data[`${key}`] = message;
+
+    setErrorMessage(data);
+  };
+
 
   const handleRegister = async () => {
     const { email, password, confirmPassword, username } = values;
 
     // Check if all fields are filled
     if (!email || !password || !confirmPassword || !username) {
-      setErrorMessage('Vui lòng nhập đầy đủ thông tin');
+      setErrorMessage(errorMessage);
       return;
     }
 
     // Check if password and confirm password match
     if (password !== confirmPassword) {
-      setErrorMessage('Mật khẩu nhập lại không khớp');
+      setErrorMessage(errorMessage);
       return;
     }
 
     // Validate email format
     const emailValidation = Validate.email(email);
     if (!emailValidation) {
-      setErrorMessage('Email không đúng định dạng');
+      setErrorMessage(errorMessage);
       return;
     }
 
     // Validate password (assuming you want to keep this check)
     const passwordValidation = Validate.Password(password);
     if (!passwordValidation) {
-      setErrorMessage('Mật khẩu phải có ít nhất 6 ký tự');
+      setErrorMessage(errorMessage);
       return;
     }
 
     // If all validations pass, proceed with registration
-    setErrorMessage('');
+    setErrorMessage(errorMessage);
     setIsLoading(true);
     try {
       const res = await authenticationAPI.HandleAuthentication(
@@ -105,7 +161,7 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
-      setErrorMessage('Đăng ký thất bại. Vui lòng thử lại.');
+      setErrorMessage(errorMessage);
     }
   }
 
@@ -144,6 +200,7 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
         onChange={val => handleChangeValue('email', val)}
         allowClear
         affix={<Sms size={22} color={appColors.gray} />}
+        onEnd={() => formValidator('email')}
       />
 
 <InputComponent
@@ -153,6 +210,7 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
         isPassword
         allowClear
         affix={<Lock size={22} color={appColors.gray} />}
+        onEnd={() => formValidator('password')}
       />
 
 <InputComponent
@@ -162,35 +220,37 @@ const SignUpScreen = ({navigation}: {navigation: any}) => {
         isPassword
         allowClear
         affix={<Lock size={22} color={appColors.gray} />}
+        onEnd={() => formValidator('confirmPassword')}
       />
 
     </SectionComponent>
     {errorMessage && 
+      (errorMessage.email 
+        || errorMessage.password 
+          || errorMessage.confirmPassword)  && (
     <SectionComponent>
-    <TextComponent text={errorMessage} color={appColors.danger} />
+    {
+      Object.keys(errorMessage).map((error, index) =>
+        errorMessage[error] && (
+        <TextComponent
+        color={appColors.danger} 
+        text={errorMessage[error]} 
+        key={`error${index}`}
+        />
+      ))}
     </SectionComponent>
-    }
+    )}
 
     <SpaceComponent height={10} />
     <SectionComponent>
       <ButtonComponent
-        // disable={isDisable}
+        disable={isDisable}
         onPress={handleRegister}
-        text="Đăng ký"
+        text="Đăng Ký"
         type="primary"
       />
     </SectionComponent>
     <SocialLogin />
-    <SectionComponent>
-      <RowComponent justify="center">
-        <TextComponent text="Bạn chưa có tài khoản? " />
-        <ButtonComponent
-          type="link"
-          text="Đăng nhập"
-          onPress={() => navigation.navigate('LoginScreen')}
-        />
-      </RowComponent>
-    </SectionComponent>
     <LoadingModal visible={isLoading} />
   </ContainerComponent>
   );

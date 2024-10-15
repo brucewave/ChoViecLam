@@ -6,6 +6,11 @@ import { fontFamilies } from '../../../constants/fontFamilies';
 import { Facebook, Google } from '../../../assests/svgs';
 
 const SocialLogin = () => {
+
+  const handleLoginWithGoogle = async () => {
+   console.log('login with google');
+  };
+
   return (
     <SectionComponent>
     <TextComponent
@@ -19,7 +24,7 @@ const SocialLogin = () => {
 
     <ButtonComponent
       type="primary"
-    //   onPress={handleLoginWithGoogle}
+      onPress={handleLoginWithGoogle}
       color={appColors.white}
       textColor={appColors.text}
       text="Đăng nhập bằng Google"

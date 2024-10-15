@@ -30,9 +30,17 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
   const [isDisable, setIsDisable] = useState(true);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const emailValidation = Validate.email(email);
+
+    if(!email || !password || !emailValidation){
+      setIsDisable(true);
+    }else{
+      setIsDisable(false);
+    }
+  }, [email, password]);
+
   const handleLogin = async () => {
-
-
     const emailValidation = Validate.email(email);
     if(emailValidation){
       try{
@@ -111,7 +119,7 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
     <SpaceComponent height={16} />
     <SectionComponent>
       <ButtonComponent
-        // disable={isDisable}
+        disable={isDisable}
         onPress={handleLogin}
         text="Đăng nhập"
         type="primary"

@@ -21,7 +21,7 @@
         "NSLocationAlwaysUsageDescription": "Ứng dụng cần quyền truy cập vị trí của bạn"
       },
       "config": {
-        "googleMapsApiKey": "AIzaSyAr7G8Zo58QnqwWWxb3SXRUUPJOuFyfEsg"
+        "googleMapsApiKey": ""
       }
     },
     "android": {
@@ -39,7 +39,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyAr7G8Zo58QnqwWWxb3SXRUUPJOuFyfEsg"
+          "apiKey": ""
         }
       }
     },
